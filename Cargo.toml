@@ -1,0 +1,14 @@
+[package]
+authors = ["letten <boomehlang@gmail.com>"]
+name = "mvneer"
+version = "0.1.0"
+
+[dependencies]
+clap = "2.20.3"
+curl = "0.4.5"
+env_logger = "0.4.0"
+log = "0.3.6"
+serde = "0.9.7"
+serde_derive = "0.9.7"
+serde_json = "0.9.6"
+url = "1.4.0"
