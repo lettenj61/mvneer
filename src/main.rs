@@ -26,14 +26,8 @@ fn main() {
         .arg(Arg::with_name("rows")
             .long("rows")
             .short("n")
-            .help("Limit output record to given number")
+            .help("Set max number of records")
             .takes_value(true))
-        .arg(Arg::with_name("print")
-            .long("print")
-            .help("Print result as dependency string for gradle|lein|ivy|pom|sbt")
-            .takes_value(true)
-            .possible_values(&["gradle", "lein", "pom", "sbt"])
-            .hide_possible_values(true))
         .setting(AppSettings::ColorNever)
         .get_matches();
 
@@ -48,12 +42,19 @@ fn main() {
     let res = mvneer::search(&matches).unwrap();
 
     if res.num_found > 0 {
-        println!("Found {} result for {} =>", res.num_found, &cond);
+        println!("Found {} result for {} :", res.num_found, &cond);
+        let l = res.data.len() as i64;
         for d in res.data {
             println!("    {}: latest version [{}] (versions behind: {})",
                      d.id,
                      d.latest_version,
                      d.version_count)
         }
+
+        if l < res.num_found {
+            println!("( ... Omitting more {} records)", res.num_found - l);
+        }
+    } else {
+        println!("There are no artifact in the Central with parameter: {}", cond);
     }
 }
