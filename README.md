@@ -67,6 +67,10 @@ Found 31 result for [group: com.chuusai] :
 
 `-n` will limit number of records to fetch.
 
+# todo
+- Make it CI managed
+- Tests
+
 # future plans
 - Generalize library for it can be embedded in another application
 - Output library version with dependency format of specific tool(e.g. SBT)
