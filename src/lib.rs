@@ -162,7 +162,7 @@ impl SearchQuery {
                 .append_pair("wt", &self.format);
             Ok(url)
         } else {
-            Err("Group ID and Artifact ID should not be left empty".into())
+            Err("Either group id or artifact id should be provided".into())
         }
     }
 }
