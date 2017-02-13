@@ -1,5 +1,5 @@
 # mvneer (em-ve-nier)
-Command line client for Maven.org Central Repository REST API
+Command line client for [Maven Central Repository REST API](https://search.maven.org/)
 
 # installation
 ```
