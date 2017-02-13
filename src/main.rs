@@ -1,10 +1,16 @@
 extern crate clap;
 extern crate env_logger;
 extern crate mvneer;
+extern crate semver;
 #[macro_use]
 extern crate serde_derive;
 
+use std::error::Error;
 use clap::{App, AppSettings, Arg};
+
+fn validate_semver(v: String) -> Result<(), String> {
+    semver::Version::parse(&v).map(|_| ()).map_err(|e| e.description().to_owned())
+}
 
 fn main() {
 
@@ -30,10 +36,21 @@ fn main() {
             .takes_value(true))
         .arg(Arg::with_name("print")
             .long("print")
-            .help("Print result as dependency string for gradle|lein|ivy|pom|sbt")
+            .help("Print result as dependency string for sbt|sbt-scalajs")
             .takes_value(true)
             .possible_values(&["gradle", "lein", "pom", "sbt"])
             .hide_possible_values(true))
+        .arg(Arg::with_name("scala")
+            .long("scala")
+            .help("Specify Scala compiler version in SemVer format")
+            .takes_value(true)
+            .validator(validate_semver))
+        .arg(Arg::with_name("scalajs")
+            .long("scalajs")
+            .help("Specify Scala.js compiler version in SemVer format")
+            .takes_value(true)
+            .requires("scala")
+            .validator(validate_semver))
         .setting(AppSettings::ColorNever)
         .get_matches();
 
@@ -42,13 +59,13 @@ fn main() {
     let cond = match (group, artifact) {
         (Some(g), Some(a)) => format!("[{} / {}]", g, a),
         (Some(v), None) | (None, Some(v)) => format!("[{}]", v),
-        _ => unreachable!()
+        _ => unreachable!(),
     };
 
     let res = mvneer::search(&matches).unwrap();
 
     if res.num_found > 0 {
-        println!("Found {} result for {} =>", res.num_found, &cond);
+        println!("Found {} result for {} :", res.num_found, &cond);
         for d in res.data {
             println!("    {}: latest version [{}] (versions behind: {})",
                      d.id,

@@ -104,7 +104,6 @@ impl Default for SearchQuery {
 }
 
 impl SearchQuery {
-
     /// Create query without specifying groups or atrifacts.
     pub fn new(group_id: &str, artifact_id: &str) -> SearchQuery {
         let mut q = SearchQuery::default();
@@ -135,18 +134,15 @@ impl SearchQuery {
         match (self.group_id.as_ref(), self.artifact_id.as_ref()) {
             (Some(g), Some(a)) => {
                 let raw = format!("g:\"{}\" AND a:\"{}\"", g, a);
-                Some(percent_encode(raw.as_bytes(), SIMPLE_ENCODE_SET)
-                    .collect::<String>())
-            },
+                Some(percent_encode(raw.as_bytes(), SIMPLE_ENCODE_SET).collect::<String>())
+            }
             (Some(g), None) => {
                 let raw = format!("g:\"{}\"", g);
-                Some(percent_encode(raw.as_bytes(), SIMPLE_ENCODE_SET)
-                    .collect::<String>())
-            },
+                Some(percent_encode(raw.as_bytes(), SIMPLE_ENCODE_SET).collect::<String>())
+            }
             (None, Some(a)) => {
                 let raw = format!("a:\"{}\"", a);
-                Some(percent_encode(raw.as_bytes(), SIMPLE_ENCODE_SET)
-                    .collect::<String>())
+                Some(percent_encode(raw.as_bytes(), SIMPLE_ENCODE_SET).collect::<String>())
             }
             _ => None,
         }
