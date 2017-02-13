@@ -6,5 +6,5 @@ fn main() {
     env_logger::init().unwrap();
 
     //println!("Hello, world!");
-    mvneer::Client::run();
+    mvneer::Client::run("org.typelevel", "cats_2.11").unwrap();
 }
