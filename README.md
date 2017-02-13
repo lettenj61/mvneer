@@ -35,10 +35,10 @@ Found 1 result for [artifact: scala-xml] :
 
 ### search with artifact / group
 
-Add `-g <group_id` after artifact name.
+Add `-g <group_id>` right next to artifact name.
 
 ```
-$ mvneer circe-core_2.11 -g io.circe
+$ mvneer 'circe-core_2.11' -g 'io.circe'
 Found 1 result for [group: io.circe / artifact: circe-core_2.11] :
     io.circe:circe-core_2.11: latest version [0.7.0] (versions behind: 24)
 ```
